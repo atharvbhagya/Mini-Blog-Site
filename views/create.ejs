@@ -19,26 +19,31 @@
   <div class="container">
     <div class="row">
       <div class="col-md-8 offset-md-2">
-        <form action="/posts/store" method="POST" encType="multipart/form-data">
-          <div class="form-floating">
+        <form action="/store/<%=userId%>" method="POST" encType="multipart/form-data">
+          <!-- <div class="form-floating">
             <input class="form-control" id="name" name="username" type="text" placeholder="Enter your name..." data-sb-validations="required" />
             <label for="name">Username</label>
           
         </div>
-          <div class="form-floating">
+        <div class="form-floating">
+          <input class="form-control" id="name" name="email" type="text" placeholder="Enter your name..." data-sb-validations="required" />
+          <label for="name">E-mail</label>
+        
+      </div> -->
+          <div class="form-floating control-group">
             <input class="form-control" id="name" name="title" type="text" placeholder="Enter your name..." data-sb-validations="required" />
             <label for="name">Title</label>
           
         </div>
         
 
-        <div class="form-floating">
+        <div class="form-floating control-group">
           <input class="form-control" id="name" name="description" type="text" placeholder="Enter your name..." data-sb-validations="required" />
           <label for="name">Description</label>
         
       </div>
       
-      <div class="form-floating">
+      <div class="form-floating control-group">
         <textarea class="form-control" id="message" name="content" placeholder="Enter your message here..." style="height: 12rem" data-sb-validations="required"></textarea>
         <label for="message">Content</label>
       
@@ -48,12 +53,12 @@
     </div>
     
           <div class="form-group my-4 text-center">
-            <button class="btn btn-primary">Create Post</button>
+            <button class="btn btn-primary" type="submit">Create Post</button>
           </div>
         </form>
       </div>
     </div>
-  </div>v
+  </div>
   <%- include('./partials/footer.ejs')%>
 </body>
 </html>

@@ -20,7 +20,7 @@
     "express-ejs-layouts": "^2.5.1",
     "express-fileupload": "^1.2.1",
     "express-session": "^1.17.2",
-    "mongoose": "^6.1.8",
+    "mongoose": "^6.1.9",
     "nodemon": "^2.0.15",
     "startbootstrap-clean-blog": "^6.0.7"
   }

@@ -26,4 +26,9 @@ window.addEventListener('DOMContentLoaded', () => {
         }
         scrollPos = currentTop;
     });
+   // $(function() {
+        setInterval(function(){
+          $('.alert').slideUp(500);
+        }, 1000);
+     // });
 })

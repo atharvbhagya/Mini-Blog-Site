@@ -11,7 +11,7 @@ const edge = require("./node_modules/edge.js");
 const app= new express();
 
 mongoose.connect('mongodb://localhost:27017/node-blog', { useNewUrlParser: true })
-        .then(() => 'You are now connected to Mongo!')
+        .then(() => console.log('You are now connected to Mongo!'))
         .catch(err => console.error('Something went wrong', err))
 
 
@@ -32,17 +32,19 @@ const port= 3000;
 
 app.use(expressSession({
     secret: 'AtharvBlog',
-    store: connectMongo.create({ mongoUrl: 'mongodb://localhost:27017/node-blog' })
+    store: connectMongo.create({ mongoUrl: 'mongodb://localhost:27017/node-blog' }),
+    saveUninitialized: true,
+	resave: true
     
 }));
 
 
 
 app.set('view engine', 'ejs');
-app.use('*', (req, res, next) => {
-    edge.global('auth', req.session.userId);
-    next();
-});
+// app.use('*', (req, res, next) => {
+//     edge.global('auth', req.session.userId);
+//     next();
+// });
 
 app.use(fileUpload());
 app.use(bodyParser.json());
@@ -74,7 +76,7 @@ app.get('/contact',setUserVal, (req, res) => {
 
 app.get('/posts/new',auth,setUserVal, createPostController);
 
-app.post('/posts/store',auth,setUserVal, storePostController);
+app.post('/store/:userId',auth,setUserVal, storePostController);
 
 app.get('/post/:id',setUserVal, getPostController);
 
@@ -88,9 +90,9 @@ app.post('/users/login',redirectIfAuthenticated,setUserVal, loginUserController)
 
 app.get("/auth/logout", setUserVal, logoutController);
 
-app.get('/post/like',auth,setUserVal, likePostController.getLike);
+//app.get('/post/like',auth,setUserVal, likePostController.getLike);
 
-app.post('/post/changeLike',auth,setUserVal, likePostController.changeLike );
+app.post('/post/like/',setUserVal, likePostController.changeLike );
 
 app.listen(port, ()=>{
     console.log(`listening at the port ${port} `);

@@ -1,18 +1,25 @@
 const mongoose= require('mongoose');
 
 const PostSchema= new mongoose.Schema({
+   // _id: new mongoose.Types.ObjectId(),
     'title': String,
     'description': String,
     'content': String,
     'username': String,
+    'email': String,
     'image': String,
+    'LikeCount': Number,
     'createdAt' : {
         type: Date,
         default: new Date()
     },
-    'Like':{
-        'count':{'type': Number, 'default': 0} ,
-        'Likeable': {'type': Boolean, 'default': true}
+    'Likes':[{
+        'type':mongoose.Schema.Types.ObjectId ,
+        'ref': 'Like'
+    }],
+    'createdBy':{
+        'type': mongoose.Schema.Types.ObjectId,
+        'ref': 'User'
     }
 });
 

@@ -21,11 +21,15 @@
 
   <!-- Main content -->
   <div class="container">
+    <%if(likeErr !=""){%>
+      <div class="alert alert-danger" role="alert">
+        <%=likeErr%> 
+      </div>
+      <%}%>
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
         <% for(var i=0; i<posts.length; i++){%>
-          <% let likeId=posts[i]._id;
-          let postNo= i; %>
+         
           <div class="post-preview" >
             <a href="/post/<%=posts[i]._id%>">
               <h2 class="post-title">
@@ -33,18 +37,21 @@
               </h2>
             </a>
           </div>
-          <p class="post-meta" id="<%=postNo%>">Posted by
+          <p class="post-meta" >Posted by
             <a href="#"><%= posts[i].username %></a>
             on <%= posts[i].createdAt.toDateString() %>
-            <button class="like">
-            
-              <i class="far fa-thumbs-up"></i>
-            </button>
-           <%=posts[i].Like.count%>
-            <button class="dislike">
-              <i class="far fa-thumbs-down"></i>
-            </button>
-            20
+              <form action="/post/like/?id=<%=posts[i]._id%>&userId=<%=userId%>" method="post">
+                <button class="like" name="like">
+              
+                  <i class="far fa-thumbs-up" ></i>
+                </button>
+              </form>
+              
+             <%=posts[i].LikeCount%>
+              <button class="dislike">
+                <i class="far fa-thumbs-down"></i>
+              </button>
+              20
           </p>
           <hr>
         <%}%>
