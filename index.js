@@ -10,9 +10,11 @@ const connectFlash = require("connect-flash");
 const edge = require("./node_modules/edge.js");
 const app= new express();
 
+
 mongoose.connect('mongodb://localhost:27017/node-blog', { useNewUrlParser: true })
         .then(() => console.log('You are now connected to Mongo!'))
         .catch(err => console.error('Something went wrong', err))
+
 
 
 const createPostController= require('./controllers/createPost');
@@ -33,8 +35,8 @@ const port= 3000;
 app.use(expressSession({
     secret: 'AtharvBlog',
     store: connectMongo.create({ mongoUrl: 'mongodb://localhost:27017/node-blog' }),
-    saveUninitialized: true,
-	resave: true
+    saveUninitialized: false,
+	resave: false
     
 }));
 
@@ -78,7 +80,7 @@ app.get('/posts/new',auth,setUserVal, createPostController);
 
 app.post('/store/:userId',auth,setUserVal, storePostController);
 
-app.get('/post/:id',setUserVal, getPostController);
+app.get('/ppost/:id',setUserVal, getPostController);
 
 app.get("/auth/register",redirectIfAuthenticated,setUserVal, createUserController);
 

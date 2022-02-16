@@ -13,12 +13,16 @@ const Post = require("../database/models/Post");
 module.exports.changeLike= async(req,res)=>{
     console.log('I was here 1!');
     try{
-        if(req.query.userId ==""){
+        if(req.query.userId =="" || req.query.userId == undefined){
             console.log("I was inside not logged in like conroller part!");
-            req.flash('loginLikefirst',"To like a post, Login to your account!");
+            //req.flash('loginLikefirst',"To like a post, Login to your account!");
            // res.locals.likeErr= req.flash('loginLikefirst');
             //console.log(`This is the message ${likeErr}`);
-           return res.redirect('/');
+
+           return res.status(200).json({
+               message: "You must Login to Like a Post!",
+               error:"Like"
+           });
         }
      
            var existingLike;
@@ -53,25 +57,37 @@ module.exports.changeLike= async(req,res)=>{
                 likeInstance.post_id= req.query.id;
                 console.log(`This is userId before being inputted ${req.query.userId}`);
                 likeInstance.user_id= req.query.userId;
-                likeInstance.save((err)=>{
+                post.LikeCount+=1;
+                await likeInstance.save((err)=>{
                     if(err){
                         return console.log("Error in creating Like!");
                     }
                     post.Likes.push(likeInstance);
-                    post.LikeCount+=1;
+                   
+                    console.log("in the controller value of LikeCount", post.LikeCount);
                     post.save();
                 });
                
                 console.log(`Like created by user: ${likeInstance.user_id} and on post: ${likeInstance.post_id}`);
                 
             }
-            res.redirect('/');
+            console.log("Just before returing the json resposnse to ajax!");
+           return res.status(200).json({
+                message: "Request succesful!",
+                data: {
+
+                    count: post.LikeCount
+                }
+            });
   
    
     }catch(err){
         if(err){
             console.log('I was here 3!');
             console.log('Error found-->', err);
+            return res.json(500,{
+                message:"Error in responding to requuest!"
+            })
         }
     }
     

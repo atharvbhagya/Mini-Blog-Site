@@ -3,11 +3,15 @@
 * Copyright 2013-2021 Start Bootstrap
 * Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-clean-blog/blob/master/LICENSE)
 */
+
+
+
 window.addEventListener('DOMContentLoaded', () => {
     let scrollPos = 0;
     const mainNav = document.getElementById('mainNav');
     const headerHeight = mainNav.clientHeight;
     window.addEventListener('scroll', function() {
+        console.log('Well fukc printing it from here lmao', $('#Yrr').attr('duncc'));
         const currentTop = document.body.getBoundingClientRect().top * -1;
         if ( currentTop < scrollPos) {
             // Scrolling Up
@@ -31,4 +35,20 @@ window.addEventListener('DOMContentLoaded', () => {
           $('.alert').slideUp(500);
         }, 1000);
      // });
-})
+
+     $('#Yrr').on('click', (event)=>{
+        event.preventDefault();
+        console.log(event);
+        var currEle= $(event.currentTarget);
+        //currEle.attr('class', "sheesh")
+        console.log('I was in the likeChange script booom!--->', currEle.attr('duncc') );
+       
+    
+      });
+
+    
+});
+
+
+
+

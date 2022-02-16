@@ -1,45 +1,62 @@
-//const Post= require('../../database/models/Post');
+
 
 
 $(function(){
- $('.fa-thumbs-up').on('click', function(event){
-     $.getJSON('/post/like' ,function(post){
-         //let post= await Post.findById(likeId);
-         var count=post.Like.likeCount;
-         if(jsonData.likeable){
-            post.Like.Likeable=false;
-            post.Like.count = ++(count);
-         }else{
-            post.Like.Likeable=true;
-            post.Like.count= --(count);
-         }
-        $('#postNo').html(`Posted by
-        <a href="#">${ post.username }</a>
-        on ${ post.createdAt.toDateString()} 
-        <button class="like">
-        
-          <i class="far fa-thumbs-up" id="${post._id}"></i>
-        </button>
-       ${count}
-        <button class="dislike">
-          <i class="far fa-thumbs-down"></i>
-        </button>
-        20
-        
-        
-        `);
-        $.post( '/post/changeLike',{
-            'postId': likeId,
-            'likeable':post.Like.Likeable,
-            'count': post.Like.count
-        }, function(data, status){
-            console.log(data);
+  $('.post-likes').on('click', (event)=>{
+    event.preventDefault();
+    console.log(event);
+    let currlike= $(event.delegateTarget);
+    
+    //  let self= this;
+   
+      $.ajax({
+        url: currlike.attr('href'),
+        type:'POST'
+        //'dataType': "json"
+      })
+      .done(function(data){
+        console.log("Message is-->", data.message);
+        if(data.error==undefined){
+          
+          console.log("New Likes on post-->",data.data.count);
+          console.log('I was in the likeChange script!--> href val', currlike.attr('href'));
+          console.log("Initial Likes on post--->", currlike.attr('like-Count'));
+          currlike.html(` <button class="like" >
+                
+          <i class="far fa-thumbs-up" ></i>
+          ${data.data.count}
+        </button>`);
+        currlike.attr('like-Count', parseInt(data.data.count));
+        }else{
+          console.log("I was here in the toastr part!");
+          toastr.options = {
+            'closeButton': true,
+            'debug': false,
+            'newestOnTop': false,
+            'progressBar': true,
+            'positionClass': 'toast-top-right',
+            'preventDuplicates': false,
+            'showDuration': '1000',
+            'hideDuration': '1000',
+            'timeOut': '5000',
+            'extendedTimeOut': '1000',
+            'showEasing': 'swing',
+            'hideEasing': 'linear',
+            'showMethod': 'fadeIn',
+            'hideMethod': 'fadeOut',
+          }
+          toastr.error(`${data.message}`);
         }
-         
-        );
-     });
+      })
+      .fail(function(errData) {
+        if(errData){
+          console.log('error in completing the request');
 
-     
- });
+        }
+    });
+
+
+    
+  });
 });
 

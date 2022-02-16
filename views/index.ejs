@@ -31,7 +31,7 @@
         <% for(var i=0; i<posts.length; i++){%>
          
           <div class="post-preview" >
-            <a href="/post/<%=posts[i]._id%>">
+            <a href="/ppost/<%=posts[i]._id%>">
               <h2 class="post-title">
                 <%= posts[i].title %>
               </h2>
@@ -40,14 +40,19 @@
           <p class="post-meta" >Posted by
             <a href="#"><%= posts[i].username %></a>
             on <%= posts[i].createdAt.toDateString() %>
-              <form action="/post/like/?id=<%=posts[i]._id%>&userId=<%=userId%>" method="post">
-                <button class="like" name="like">
+            <!-- <div class="like-class"> -->
+
+              <a class="post-likes" href="/post/like/?id=<%=posts[i]._id%>&userId=<%=userId%>"  like-Count="<%=posts[i].LikeCount%>">
+               <button class="like">
+
+                 <i class="far fa-thumbs-up" ></i>
+                 
+                 <%=posts[i].LikeCount%>
+               </button>
+              </a>
+            <!-- </div> -->
               
-                  <i class="far fa-thumbs-up" ></i>
-                </button>
-              </form>
-              
-             <%=posts[i].LikeCount%>
+            
               <button class="dislike">
                 <i class="far fa-thumbs-down"></i>
               </button>
@@ -57,15 +62,42 @@
         <%}%>
         
         <!-- Pager -->
-        <div class="clearfix">
-          <a class="btn btn-primary float-right" href="#">Older Posts →</a>
-        </div>
       </div>
     </div>
   </div>
-
+  
+  <div class="clearfix" id="Yrr" duncc="value of Duncc attribute">
+    <a class="btn btn-primary float-center" href="#" >Older Posts →</a>
+  </div>
 
   <%- include('./partials/footer.ejs')%>
+
+  <!-- <script > 
+  document.addEventListener("DOMContentLoaded", function(){
+    //....
+    $('#Yrr').on('click', (event)=>{
+    event.preventDefault();
+    var currEle= $(this);
+    //currEle.attr('class', "sheesh")
+    console.log('I was in the likeChange script booom!--->
+    <!-- //  let self= this;
+
+  });
+});
+ </script> --> 
+ <script
+ src="https://code.jquery.com/jquery-2.2.4.js"
+ integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
+ crossorigin="anonymous"></script>
+
+ <script src="https://code.jquery.com/jquery-1.12.4.js" 
+ integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU=" 
+ crossorigin="anonymous"></script>
+
+ <script src="https://code.jquery.com/jquery-3.6.0.js" 
+ integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+  crossorigin="anonymous"></script>
+
 </body>
 </html>
  
