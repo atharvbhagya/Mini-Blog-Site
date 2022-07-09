@@ -15,7 +15,8 @@ module.exports.changeLike= async(req,res)=>{
     try{
         if(req.query.userId =="" || req.query.userId == undefined){
             console.log("I was inside not logged in like conroller part!");
-            //req.flash('loginLikefirst',"To like a post, Login to your account!");
+            //
+            req.flash('loginLikefirst',"To like a post, Login to your account!");
            // res.locals.likeErr= req.flash('loginLikefirst');
             //console.log(`This is the message ${likeErr}`);
 
